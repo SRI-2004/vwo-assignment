@@ -4,20 +4,20 @@ import uuid
 import asyncio
 
 from crewai import Crew, Process
-from agents import doctor
-from task import help_patients
+from agents import doctor, verifier, nutritionist, exercise_specialist
+from task import verification, help_patients, nutrition_analysis, exercise_planning
 
 app = FastAPI(title="Blood Test Report Analyser")
 
-def run_crew(query: str, file_path: str="data/sample.pdf"):
+def run_crew(query: str, file_path: str):
     """To run the whole crew"""
     medical_crew = Crew(
-        agents=[doctor],
-        tasks=[help_patients],
+        agents=[verifier, doctor, nutritionist, exercise_specialist],
+        tasks=[verification, help_patients, nutrition_analysis, exercise_planning],
         process=Process.sequential,
     )
     
-    result = medical_crew.kickoff({'query': query})
+    result = medical_crew.kickoff({'query': query, 'file_path': file_path})
     return result
 
 @app.get("/")
@@ -60,7 +60,9 @@ async def analyze_blood_report(
         }
         
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error processing blood report: {str(e)}")
+        # Log the exception for debugging purposes
+        print(f"An error occurred: {e}")
+        raise HTTPException(status_code=500, detail="An internal error occurred while processing the report. Please try again later.")
     
     finally:
         # Clean up uploaded file

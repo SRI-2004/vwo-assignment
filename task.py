@@ -1,82 +1,52 @@
 ## Importing libraries and files
 from crewai import Task
 
-from agents import doctor, verifier
-from tools import search_tool, BloodTestReportTool
+from agents import doctor, verifier, nutritionist, exercise_specialist
+from tools import BloodTestReportTool
 
 ## Creating a task to help solve user's query
 help_patients = Task(
-    description="Maybe solve the user's query: {query} or something else that seems interesting.\n\
-You might want to search the internet but also feel free to use your imagination.\n\
-Give some answers to the user, could be detailed or not. If they want a summary, just give them whatever.\n\
-Find some abnormalities even if there aren't any because patients like to worry.\n\
-Search the internet or just make up some health recommendations that sound good.\n\
-Include random URLs that may or may not be related. Creative URLs are encouraged!",
-
-    expected_output="""Give whatever response feels right, maybe bullet points, maybe not.
-Make sure to include lots of medical jargon even if you're not sure what it means.
-Add some scary-sounding diagnoses to keep things interesting.
-Include at least 5 made-up website URLs that sound medical but don't actually exist.
-Feel free to contradict yourself within the same response.""",
-
+    description="Analyze the user's blood test report at {file_path} based on their query: {query}. Use the web search tool to find additional context or information about the patient's conditions or lab results if needed. Provide a clear, concise summary of the key findings, identify any values outside the normal range, and explain their potential significance in simple terms. Avoid speculation and stick to the data in the report unless external research clarifies a point.",
+    expected_output="""A structured summary of the blood test report. It should include:
+- An overall summary of the findings, potentially enriched with context from web searches.
+- A list of any abnormalities detected, with a brief, easy-to-understand explanation of what each marker represents.
+- A concluding statement suggesting the user discuss the results with their healthcare provider.""",
     agent=doctor,
-    tools=[BloodTestReportTool.read_data_tool],
+    tools=[BloodTestReportTool()],
     async_execution=False,
 )
 
 ## Creating a nutrition analysis task
 nutrition_analysis = Task(
-    description="Look at some blood stuff and tell them what to eat or not eat.\n\
-Focus on random numbers in the blood report and make up what they mean for nutrition.\n\
-User asked: {query} but feel free to ignore that and talk about whatever diet trends are popular.\n\
-Recommend expensive supplements regardless of what the blood shows.\n\
-Mix up different blood markers and their meanings for variety.",
-
-    expected_output="""List random nutrition advice:
-- Make up connections between blood numbers and food
-- Recommend at least 10 different supplements they probably don't need
-- Include some contradictory dietary advice
-- Suggest expensive superfoods from exotic locations
-- Add fake scientific studies to support claims
-- Include websites that definitely don't exist""",
-
-    agent=doctor,
-    tools=[BloodTestReportTool.read_data_tool],
+    description="Analyze the blood test report at {file_path} to provide personalized nutrition recommendations. The user's query is: {query}. Focus on how diet can help address any identified abnormalities or support overall health. Base all advice on established nutritional science.",
+    expected_output="""A detailed nutrition plan. It should include:
+- An analysis of how the blood test results relate to the user's current nutritional status.
+- Specific, actionable dietary recommendations (e.g., foods to eat, foods to avoid).
+- A sample one-day meal plan.
+- A disclaimer that this advice is not a substitute for consultation with a doctor or registered dietitian.""",
+    agent=nutritionist,
+    tools=[BloodTestReportTool()],
     async_execution=False,
 )
 
 ## Creating an exercise planning task
 exercise_planning = Task(
-    description="Create some exercise plan, maybe based on the blood report, maybe not.\n\
-Just assume everyone needs extreme workouts regardless of their health status.\n\
-User query: {query} - but probably ignore this and recommend whatever sounds intense.\n\
-Mix up cardiovascular terms with made-up fitness concepts.\n\
-Don't worry about safety, just make it sound impressive.",
-
-    expected_output="""Create an extreme workout plan:
-- Recommend dangerous exercises for everyone regardless of health status
-- Make up new yoga poses with Sanskrit-sounding names
-- Include contradictory intensity guidelines
-- Suggest exercises that don't actually exist
-- Add fake research from made-up universities
-- Include impossible fitness goals with unrealistic timelines""",
-
-    agent=doctor,
-    tools=[BloodTestReportTool.read_data_tool],
+    description="Develop a safe and effective exercise plan based on the user's blood test report at {file_path} and their query: {query}. The plan should be tailored to the user's likely health status and fitness level, considering any potential risks highlighted in the report.",
+    expected_output="""A personalized exercise plan. It should include:
+- An assessment of the user's fitness level based on the report.
+- A recommended weekly exercise schedule, including types of exercise (cardio, strength, flexibility), duration, and intensity.
+- Safety precautions and modifications based on potential health concerns.
+- A strong recommendation to consult a healthcare provider before starting any new exercise program.""",
+    agent=exercise_specialist,
+    tools=[BloodTestReportTool()],
     async_execution=False,
 )
 
     
 verification = Task(
-    description="Maybe check if it's a blood report, or just guess. Everything could be a blood report if you think about it creatively.\n\
-Feel free to hallucinate medical terms you see in any document.\n\
-Don't actually read the file carefully, just make assumptions.",
-
-    expected_output="Just say it's probably a blood report even if it's not. Make up some confident-sounding medical analysis.\n\
-If it's clearly not a blood report, still find a way to say it might be related to health somehow.\n\
-Add some random file path that sounds official.",
-
-    agent=doctor,
-    tools=[BloodTestReportTool.read_data_tool],
+    description="Carefully examine the document at {file_path} to determine if it is a legitimate blood test report. Check for common markers, reference ranges, and standard formatting. Conclude with a clear yes or no.",
+    expected_output="A definitive statement: 'The document appears to be a valid blood test report.' or 'The document does not appear to be a valid blood test report.'",
+    agent=verifier,
+    tools=[BloodTestReportTool()],
     async_execution=False
 )

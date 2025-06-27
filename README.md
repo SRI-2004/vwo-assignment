@@ -4,7 +4,7 @@
 
 ### Install Required Libraries
 ```sh
-pip install -r requirement.txt
+pip install -r requirements.txt
 ```
 
 # You're All Not Set!

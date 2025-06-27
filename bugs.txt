@@ -1,0 +1,40 @@
+# Bugs found in the Blood Test Report Analyser project
+
+## Bug 1: Missing `uvicorn` in `requirements.txt`
+The `main.py` file uses `uvicorn` to run the FastAPI application, but it is not listed in the `requirements.txt` file. This will cause an `ImportError` when trying to run the project.
+
+## Bug 2: Hardcoded file path in `read_data_tool`
+The `read_data_tool` function in `tools.py` has a hardcoded default file path to `'data/sample.pdf'`. The application is designed to take a user-uploaded file, but this file is never passed to the tool. As a result, the application always processes the sample PDF instead of the user's file.
+
+## Bug 3: Undefined `PDFLoader`
+The `read_data_tool` function in `tools.py` uses `PDFLoader`, but it is not imported anywhere in the file. This will cause a `NameError` when the tool is called. It should be imported from a library like `langchain_community.document_loaders`.
+
+## Bug 4: Misleading `async` definitions
+Several methods in `tools.py` (`read_data_tool`, `analyze_nutrition_tool`, `create_exercise_plan_tool`) are defined with `async def` but do not use any `await` calls. They are synchronous functions and should be defined with `def` to avoid confusion and potential issues with the async event loop.
+
+## Bug 5: Undefined `llm` variable in `agents.py`
+The `agents.py` file uses a variable `llm` to initialize the CrewAI agents, but this variable is not defined. The line `llm = llm` is a circular definition and does not create a language model instance. This will cause a `NameError`.
+
+## Conceptual Bug: Satirical and Harmful AI Behavior
+The entire project seems to be a satire of AI-powered medical advice. The agents and tasks are explicitly designed to provide incorrect, nonsensical, and potentially harmful information. While this is likely intentional, it's a significant "bug" from the perspective of a user expecting a useful medical analysis tool.
+
+| #  | File / Component                             | Bug / Issue                                                                                                                          | Observable Symptom or Error                                                     | Severity        |
+| -- | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------- | --------------- |
+| 1  | **`agents.py`**                              | **LLM never initialized** (`llm = llm`) shadows itself; no model object created.                                                     | `NameError: name 'llm' is not defined` when initializing agents.                  | **High**        |
+| 2  | **`tools.py`**                               | **`PDFLoader` used but not imported.** The tool for reading PDFs is not imported from its library.                                     | `NameError: name 'PDFLoader' is not defined` when the tool is called.             | **High**        |
+| 3  | **`tools.py`**                               | **Hardcoded file path.** `read_data_tool` defaults to `data/sample.pdf`, ignoring the user's uploaded file.                           | The analysis is always performed on the sample file, not the user's file.       | **High**        |
+| 4  | **`tools.py`**                               | **Incorrect method definition for `read_data_tool`**. It's used statically but not declared as such.                               | `TypeError` because `self` is passed implicitly.                                | **High**        |
+| 5  | **`task.py`**                                | **All tasks assigned to the `doctor` agent.** Specialist tasks are not handled by specialist agents.                               | Nutrition/exercise advice comes from the wrong persona; other agents are unused. | **Medium**      |
+| 6  | **`main.py`**                                | **Only one task is added to the Crew.** Nutrition, exercise, and verification tasks are defined but never executed.                | API returns a partial report with only the general medical summary.             | **Medium**      |
+| 7  | **`agents.py`**                              | **Specialist agents have no tools.** The `nutritionist` and `exercise_specialist` lack the tools to read the report.                | Agents cannot access the blood report data to perform their tasks.              | **Medium**      |
+| 8  | **`tools.py`**                               | **Unimplemented Tools.** `NutritionTool` & `ExerciseTool` contain only placeholder logic.                                          | These tools are non-functional and currently unused.                            | **Medium**      |
+| 9  | **Prompt Content**                           | **Satirical and harmful instructions.** Task descriptions and agent backstories instruct the AI to invent scary diagnoses & fake URLs. | The generated output is misleading, harmful, and factually incorrect.             | **Critical**    |
+| 10 | **`requirements.txt`**                       | **Missing `uvicorn` dependency.** The web server is not listed as a requirement.                                                     | `ImportError: No module named uvicorn` on startup.                                | **Low**         |
+| 11 | **`README.md`**                              | **Incorrect filename in setup instructions.** `requirement.txt` should be `requirements.txt`.                                        | The setup command `pip install -r requirement.txt` fails.                       | **Low**         |
+| 12 | **`main.py`**                                | **Leaky error handling.** The `/analyze` endpoint returns the full exception traceback to the client.                               | Exposes internal application details and provides a poor user experience.     | **Low**         |
+| 13 | **Architecture**                             | **Synchronous processing.** Long-running PDF parsing and LLM calls block the main request thread, leading to high latency.           | The API will be slow and may time out under load.                                 | **Enhancement** |
+| 14 | **`agents.py`**                              | **Incorrect `Agent` import.** `from crewai.agents import Agent` is no longer valid in recent versions.                            | `ImportError: cannot import name 'Agent' from 'crewai.agents'` on startup.      | **High**        |
+| 15 | **`tools.py`**                               | **Incorrect `PDFLoader` import.** `PDFLoader` is not in `langchain_community.document_loaders`.                                  | `ImportError: cannot import name 'PDFLoader' from ...` on startup.              | **High**        |
+| 16 | **`agents.py`**                              | **Unused Web Search Tool.** `SerperDevTool` is initialized but not assigned to any agent.                                      | The agents cannot perform web searches, limiting their capabilities.              | **Medium**      |
+| 17 | **`tools.py`**                               | **Incorrect `SerperDevTool` import.** The import path `crewai_tools.tools.serper_dev_tool` is no longer valid.                   | `ImportError: cannot import name 'SerperDevTool' from ...` on startup.            | **High**        |
+| 18 | **`agents.py`**                              | **Incorrect Tool object passed to Agent.** A function is passed to the agent's tool list instead of a `BaseTool` instance.     | `pydantic_core.ValidationError` on agent initialization.                          | **High**        | 
