@@ -50,8 +50,10 @@ async def analyze_blood_report(
     db.commit()
     db.refresh(new_request)
 
-    # Dispatch the background task
+    # Dispatch the background task and save its ID
     task = run_analysis_crew.delay(new_request.id)
+    new_request.celery_task_id = task.id
+    db.commit()
 
     return {
         "status": "success",
@@ -62,23 +64,20 @@ async def analyze_blood_report(
 @app.get("/results/{task_id}")
 async def get_analysis_result(task_id: str, db: Session = Depends(get_db)):
     """
-    Retrieves the status and result of an analysis task.
+    Retrieves the status and result of an analysis task using the Celery Task ID.
     """
-    # Check our database first
-    request = db.query(AnalysisRequest).filter(AnalysisRequest.id == task_id).first()
+    # The task_id from the URL is the Celery task ID.
+    request = db.query(AnalysisRequest).filter(AnalysisRequest.celery_task_id == task_id).first()
+    
     if not request:
-        # If not in DB, maybe it's a celery ID? Let's check celery.
-        task_result = AsyncResult(task_id, app=celery_app)
-        if not task_result:
-             raise HTTPException(status_code=404, detail="Task not found.")
-        return {"status": task_result.status, "result": task_result.result}
+        raise HTTPException(status_code=404, detail="Task not found.")
 
-    response = {"task_id": request.id, "status": request.status, "created_at": request.created_at}
+    response = {"task_id": request.celery_task_id, "status": request.status, "created_at": request.created_at}
 
     if request.status == "COMPLETED" and request.result:
         response["result"] = request.result.content
     elif request.status == "FAILED":
-        # Get celery error info
+        # Get celery error info from Celery's backend
         task_result = AsyncResult(task_id, app=celery_app)
         response["error"] = str(task_result.result)
 

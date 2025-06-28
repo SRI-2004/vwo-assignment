@@ -8,7 +8,10 @@ API_URL = "http://localhost:8000"
 
 async def upload_file(file: cl.File):
     """Uploads the file to the FastAPI backend."""
-    files = [("file", (file.name, file.content, "application/pdf"))]
+    with open(file.path, "rb") as f:
+        content = f.read()
+
+    files = [("file", (file.name, content, "application/pdf"))]
     headers = {"accept": "application/json"}
     data = {"query": cl.user_session.get("query")}
     

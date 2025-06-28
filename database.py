@@ -25,6 +25,7 @@ class AnalysisRequest(Base):
     __tablename__ = "analysis_requests"
     
     id = Column(String, primary_key=True, default=generate_uuid)
+    celery_task_id = Column(String, index=True, nullable=True)
     status = Column(String, default="PENDING")
     query = Column(String)
     file_path = Column(String)

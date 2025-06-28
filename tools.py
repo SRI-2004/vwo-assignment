@@ -88,7 +88,7 @@ class BloodTestReportTool(BaseTool):
         docs = text_splitter.create_documents([full_text])
 
         # 5. Set up the vector store with embeddings
-        embeddings = HuggingFaceEmbeddings()
+        embeddings = HuggingFaceEmbeddings(model_kwargs={"device": "cpu"})
         vectorstore = Chroma.from_documents(docs, embeddings)
         
         # 6. Search for the most relevant documents based on the query
