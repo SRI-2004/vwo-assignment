@@ -1,4 +1,5 @@
 import chainlit as cl
+import os
 import asyncio
 from crewai import Crew, Process
 
@@ -58,9 +59,22 @@ async def run_crew_in_background():
 
     # Extract and display the output from each completed task
     await cl.Message(content="--- Final Report ---").send()
+
+    final_report_content = "# Blood Test Analysis Report\n\n"
     for task in medical_crew.tasks:
         if task.output is not None:
             # The Final Answer is in task.output.raw
             await cl.Message(author=task.agent.role, content=task.output.raw).send()
+            final_report_content += f"## {task.agent.role}\n\n"
+            final_report_content += f"{task.output.raw}\n\n"
+
+    # Save the final report to a markdown file
+    output_dir = "outputs"
+    os.makedirs(output_dir, exist_ok=True)
+    report_path = os.path.join(output_dir, "final_report.md")
+    with open(report_path, "w") as f:
+        f.write(final_report_content)
+
+    await cl.Message(content=f"Final report saved to `{report_path}`.").send()
 
     # Chainlit handles the temporary file, so no need to manually clean up. 
