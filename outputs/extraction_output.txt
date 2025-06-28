@@ -1,0 +1,28 @@
+--- Extracted Content using PyMuPDFLoader ---
+
+IMPORTANT INSTRUCTIONS
+                                                         results \nreleased  pertain \nto \nthe \nspecimen \nŸTest \nsubmitted .ŸAll          test \nresults  are  dependent  on \nthe  quality  of \nthe \nsample \nreceived  by \nthe  Laboratory .
+                                                                 investigations  are  only  a \ntool \nto \nfacilitate \nŸLaboratory in  arriving  at  a  diagnosis  and  should  be  clinically  correlated  by \nthe  Referring  Physician .ŸReport
+                                                                   delivery  may  be  delayed  due \nto  unforeseen \ncircumstances. Inconvenience \nis \ntests  may \nrequire \nfurther \ntesting  at  additional \ncost \nfor \nregretted .ŸCertain
+
+--- Table from Page 7 ---
+           0         1                                                  2             3            4                                       5
+        Name                                                        DUMMY                                                                   
+     Lab No.                                                 U4\n39854467           Age                                             30 Years
+      Ref By : : : : :                                                           Gender                                                 Male
+   Collected                                         4/5/2023  11:03:00AM      Reported      : : : :                    16/5/2023  1:36:25PM
+  A/c Status                                                           P1 Report Status                                                Final
+
+derivation \nof \nexact \nvalue.  Kindly \nsubmit \nrequest  within       72 hours \npost \nresults  may \nshow \ninterlaboratory \nreporting.ŸTest \nvariations .ŸThe  Courts/Forum
+                                            at  Delhi  shall  have  exclusive \njurisdiction \nin  all  disputes /claims  concerning              the \ntest(s)  &  or \nresults  of \nresults  are  not  valid \nfor  medico \nlegal \ntest(s).ŸTest
+                                                                    is \ncomputer \ngenerated  medical \ndiagnostic \npurposes.ŸThis      report \nthat \nhas \nbeen \nvalidated \nreport \ndoes \nby  Authorized  Medical  Practitioner /Doctor.ŸThe
+                                                                                                        not need physical signature.
+
+--- Table from Page 3 ---
+           0         1                                              2             3            4                                       5
+        Name                                                    DUMMY                                                                   
+     Lab No.                                             U4\n39854467           Age                                             30 Years
+      Ref By : : : : :                                                       Gender                                                 Male
+   Collected                                 P1\n4/5/2023  11:03:00AM      Reported      : : : :                    16/5/2023  1:36:25PM
+  A/c Status                                                          Report Status                                                Final
+Collected at                      LPL-ROHINI (NATIONAL REFERENCE LAB)               Processed at              LPL-NATIONAL REFERENCE LAB

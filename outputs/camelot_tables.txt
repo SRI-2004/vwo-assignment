@@ -1,0 +1,348 @@
+--- Extracted 24 tables using Camelot (Stream) ---
+
+--- Table 1 (Page: 1) ---
+        Name                                                    DUMMY                                                                   
+     Lab No.                                             U4\n39854467           Age                                             30 Years
+      Ref By : : : : :                                                       Gender                                                 Male
+   Collected                                     4/5/2023  11:03:00AM      Reported      : : : :                    16/5/2023  1:36:25PM
+  A/c Status                                                          Report Status                                                Final
+Collected at                      LPL-ROHINI (NATIONAL REFERENCE LAB)               Processed at              LPL-NATIONAL REFERENCE LAB
+                       National Reference laboratory, Block E, Sector                            National Reference laboratory, Block E,
+                                                           18, ROHINI                               Sector 18, Rohini, New Delhi -110085
+                                                         DELHI 110085                                                                   
+
+--- Table 2 (Page: 1) ---
+                                   Test Report                            
+                         Test Name     Results    Units Bio. Ref. Interval
+                 SwasthFit Super 4                                        
+          COMPLETE BLOOD COUNT;CBC                                        
+                        Hemoglobin       15.00     g/dL      13.00 - 17.00
+                      (Photometry)                                        
+          Packed Cell Volume (PCV)       45.00        %      40.00 - 50.00
+                      (Calculated)                                        
+                         RBC Count        4.50 mill/mm3        4.50 - 5.50
+            (Electrical Impedence)                                        
+                               MCV       90.00       fL     83.00 - 101.00
+            (Electrical Impedence)                                        
+                               MCH       32.00       pg      27.00 - 32.00
+                      (Calculated)                                        
+                              MCHC       33.00     g/dL      31.50 - 34.50
+                      (Calculated)                                        
+ Red Cell Distribution Width (RDW)       14.00        %      11.60 - 14.00
+            (Electrical Impedence)                                        
+      Total Leukocyte Count  (TLC)        8.00 thou/mm3       4.00 - 10.00
+            (Electrical Impedence)                                        
+Differential Leucocyte Count (DLC)                                        
+                  (VCS Technology)                                        
+             Segmented Neutrophils       60.00        %      40.00 - 80.00
+
+--- Table 3 (Page: 1) ---
+      Total Leukocyte Count  (TLC)  8.00 thou/mm3  4.00 - 10.00
+            (Electrical Impedence)                             
+Differential Leucocyte Count (DLC)                             
+                  (VCS Technology)                             
+             Segmented Neutrophils 60.00        % 40.00 - 80.00
+                       Lymphocytes 30.00        % 20.00 - 40.00
+                         Monocytes  5.00        %  2.00 - 10.00
+                       Eosinophils  5.00        %   1.00 - 6.00
+                         Basophils  0.00        %         <2.00
+          Absolute Leucocyte Count                             
+                      (Calculated)                             
+                       Neutrophils  4.80 thou/mm3   2.00 - 7.00
+                       Lymphocytes  2.40 thou/mm3   1.00 - 3.00
+                         Monocytes  0.40 thou/mm3   0.20 - 1.00
+                       Eosinophils  0.40 thou/mm3   0.02 - 0.50
+                         Basophils  0.00 thou/mm3   0.02 - 0.10
+
+--- Table 4 (Page: 2) ---
+        Name                                                    DUMMY                                                                   
+     Lab No.                                             U4\n39854467           Age                                             30 Years
+      Ref By : : : : :                                                       Gender                                                 Male
+   Collected                                     4/5/2023  11:03:00AM      Reported      : : : :                    16/5/2023  1:36:25PM
+  A/c Status                                                          Report Status                                                Final
+Collected at                      LPL-ROHINI (NATIONAL REFERENCE LAB)               Processed at              LPL-NATIONAL REFERENCE LAB
+                       National Reference laboratory, Block E, Sector                            National Reference laboratory, Block E,
+                                                           18, ROHINI                               Sector 18, Rohini, New Delhi -110085
+                                                         DELHI 110085                                                                   
+
+--- Table 5 (Page: 2) ---
+                                                                                                          Test Report      
+                                                                                                Test Name     Results Units
+                                                                                                     Note                  
+1. As per the recommendation of International council for Standardization in Hematology, the differential                  
+  leucocyte counts are additionally being reported as absolute numbers of each cell in per unit volume of                  
+                                                                                                    blood                  
+                                                                    2. Test conducted on EDTA whole blood                  
+
+--- Table 6 (Page: 3) ---
+        Name                                                    DUMMY                                                                   
+     Lab No.                                             U4\n39854467           Age                                             30 Years
+      Ref By : : : : :                                                       Gender                                                 Male
+   Collected                                 P1\n4/5/2023  11:03:00AM      Reported      : : : :                    16/5/2023  1:36:25PM
+  A/c Status                                                          Report Status                                                Final
+Collected at                      LPL-ROHINI (NATIONAL REFERENCE LAB)               Processed at              LPL-NATIONAL REFERENCE LAB
+                       National Reference laboratory, Block E, Sector                            National Reference laboratory, Block E,
+                                                           18, ROHINI                               Sector 18, Rohini, New Delhi -110085
+                                                         DELHI 110085                                                                   
+
+--- Table 7 (Page: 3) ---
+                            Test Report                                 
+                  Test Name     Results         Units Bio. Ref. Interval
+LIVER & KIDNEY PANEL, SERUM                                             
+                 Creatinine        0.90         mg/dL        0.70 - 1.30
+   (Modified Jaffe,Kinetic)                                             
+              GFR Estimated         118 mL/min/1.73m2                >59
+    (CKD EPI Equation 2021)                                             
+               GFR Category          G1                                 
+     (KDIGO Guideline 2012)                                             
+                       Urea       20.00         mg/dL      13.00 - 43.00
+                (Urease UV)                                             
+       Urea Nitrogen  Blood        9.34         mg/dL       6.00 - 20.00
+               (Calculated)                                             
+       BUN/Creatinine Ratio          10                                 
+               (Calculated)                                             
+                  Uric Acid        5.00         mg/dL        3.50 - 7.20
+                  (Uricase)                                             
+                 AST (SGOT)        11.0           U/L      15.00 - 40.00
+         (IFCC without P5P)                                             
+                 ALT (SGPT)        21.0           U/L      10.00 - 49.00
+         (IFCC without P5P)                                             
+                       GGTP        11.0           U/L             0 - 73
+                     (IFCC)                                             
+ Alkaline Phosphatase (ALP)      150.00           U/L     30.00 - 120.00
+                 (IFCC-AMP)                                             
+           Bilirubin  Total        0.20         mg/dL        0.30 - 1.20
+                (Oxidation)                                             
+          Bilirubin  Direct        0.10         mg/dL               <0.3
+                (Oxidation)                                             
+        Bilirubin  Indirect        0.10         mg/dL              <1.10
+               (Calculated)                                             
+              Total Protein        7.00          g/dL        5.70 - 8.20
+                   (Biuret)                                             
+                    Albumin        4.00          g/dL        3.20 - 4.80
+                      (BCG)                                             
+                A : G Ratio        1.33                      0.90 - 2.00
+               (Calculated)                                             
+       Globulin(Calculated)        3.00         gm/dL          2.0 - 3.5
+             Calcium, Total        8.00         mg/dL       8.70 - 10.40
+             (Arsenazo III)                                             
+
+--- Table 8 (Page: 4) ---
+        Name                                                    DUMMY                                                                   
+     Lab No.                                             U4\n39854467           Age                                             30 Years
+      Ref By : : : : :                                                       Gender                                                 Male
+   Collected                                 P1\n4/5/2023  11:03:00AM      Reported      : : : :                    16/5/2023  1:36:25PM
+  A/c Status                                                          Report Status                                                Final
+Collected at                      LPL-ROHINI (NATIONAL REFERENCE LAB)               Processed at              LPL-NATIONAL REFERENCE LAB
+                       National Reference laboratory, Block E, Sector                            National Reference laboratory, Block E,
+                                                           18, ROHINI                               Sector 18, Rohini, New Delhi -110085
+                                                         DELHI 110085                                                                   
+
+--- Table 9 (Page: 4) ---
+               Test Report                         
+     Test Name     Results Units Bio. Ref. Interval
+    Phosphorus        4.00 mg/dL        2.40 - 5.10
+(Molybdate UV)                                     
+        Sodium      140.00 mEq/L    136.00 - 145.00
+(Indirect ISE)                                     
+     Potassium        5.00 mEq/L        3.50 - 5.10
+(Indirect ISE)                                     
+      Chloride      101.00 mEq/L     98.00 - 107.00
+(Indirect ISE)                                     
+
+--- Table 10 (Page: 4) ---
+      Chloride                                                                        101.00\nmEq/L\n 98.00 - 107.00
+(Indirect ISE)                                                                                                      
+          Note                                                                                                      
+            1.          Estimated GFR  (eGFR) calculated using the 2021 CKD-EPI creatinine equation and GFR Category
+                                                                               reported as per KDIGO guideline 2012.
+            2.     eGFR category G1 or G2 does not fulfil the criteria for CKD, in the absence of evidence of kidney
+                                                                                                              damage
+            3.       The BUN-to-creatinine ratio is used to differentiate prerenal and postrenal azotemia from renal
+               azotemia. Because of considerable variability, it should be used only as a rough guide. Normally, the
+                                                                                  BUN/creatinine ratio is about 10:1
+
+--- Table 11 (Page: 5) ---
+        Name                                                    DUMMY                                                                   
+     Lab No.                                             U4\n39854467           Age                                             30 Years
+      Ref By : : : : :                                                       Gender                                                 Male
+   Collected                                 P1\n4/5/2023  11:03:00AM      Reported      : : : :                    16/5/2023  1:36:25PM
+  A/c Status                                                          Report Status                                                Final
+Collected at                      LPL-ROHINI (NATIONAL REFERENCE LAB)               Processed at              LPL-NATIONAL REFERENCE LAB
+                       National Reference laboratory, Block E, Sector                            National Reference laboratory, Block E,
+                                                           18, ROHINI                               Sector 18, Rohini, New Delhi -110085
+                                                         DELHI 110085                                                                   
+
+--- Table 12 (Page: 5) ---
+                                                                                                      Test Report
+Test Name                                                                      Results\nUnits\nBio. Ref. Interval
+             Atherosclerotic Cardiovascular Disease (ASCVD) risk factors especially lipid profile. This should be
+          done earlier if there is family history of premature heart disease, dyslipidemia, obesity or other risk
+                                                                                                          factors
+       4.       Indians tend to have higher triglyceride levels & Lower HDL cholesterol combined with small dense
+                                                       LDL particles, a pattern known as atherogenic dyslipidemia
+       5. Non HDL Cholesterol comprises the cholesterol carried by all atherogenic particles, including LDL, IDL,
+                                                               VLDL & VLDL remnants, Chylomicron remnants & Lp(a)
+       6.        LAI recommends LDL cholesterol as primary target and Non HDL cholesterol as co-primary treatment
+                                                                                                           target
+       7.         Apolipoprotein B is an, secondary lipid target for treatment once LDL & Non HDL goals have been
+                                                                                                         achieved
+       8.            Additional testing for Apolipoprotein B, hsCRP, Lp(a ) & LP-PLA2  should be considered among
+                                                        patients with moderate risk for ASCVD for risk refinement
+
+--- Table 13 (Page: 6) ---
+                                         Name        \n   DUMMY                                         
+                                          U4\n39854467\nLab No.                            Age\n30 Years
+                                              : : : : :\nRef By                             Male\nGender
+                            P1\n4/5/2023  11:03:00AM\nCollected  : : : :\n16/5/2023  1:36:25PM\nReported
+                                                     A/c Status                     Final\nReport Status
+Collected at            \n: LPL-ROHINI (NATIONAL REFERENCE LAB) LPL-NATIONAL REFERENCE LAB\nProcessed at
+                        National Reference laboratory, Block E,  National Reference laboratory, Block E,
+
+--- Table 14 (Page: 6) ---
+                                                                                              Interpretation
+HbA1c result is suggestive of non diabetic adults (>=18 years)/ well controlled Diabetes in a known Diabetic
+                                        Interpretation as per American Diabetes Association (ADA) Guidelines
+                  ------------------------------------------------------------------------------------------
+                | Reference Group | Non diabetic      | At risk       | Diagnosing  | Therapeutic goals    |
+                |                 | adults >=18 years | (Prediabetes) | Diabetes    | for glycemic control |
+                | ----------------|-------------------|---------------|-------------|----------------------|
+                | HbA1c in %      | 4.0-5.6           | 5.7-6.4       | >= 6.5      | <7.0                 |
+                  ------------------------------------------------------------------------------------------
+   Note: Presence of Hemoglobin variants and/or conditions that affect red cell turnover must be considered,
+              particularly when the HbA1C result does not correlate with the patient’s blood glucose levels.
+                           ---------------------------------------------------------------------------------
+                         | FACTORS THAT INTERFERE WITH HbA1C    | FACTORS THAT AFFECT INTERPRETATION       |
+                         | MEASUREMENT                          | OF HBA1C RESULTS                         |
+                         |--------------------------------------|------------------------------------------|
+                         | Hemoglobin variants,elevated fetal   | Any condition that shortens erythrocyte  |
+                         | hemoglobin (HbF) and chemically      | survival or decreases mean erythrocyte   |
+                         | modified derivatives of hemoglobin   | age (e.g.,recovery from acute blood loss,|
+                         | (e.g. carbamylated Hb in patients    | hemolytic anemia, HbSS, HbCC, and HbSC)  |
+                         | with renal failure) can affect the   | will falsely lower HbA1c test results    |
+                         | accuracy of HbA1c measurements       | regardless of the assay method used.Iron |
+                         |                                      | deficiency anemia is associated with     |
+                         |                                      | higher HbA1c                             |
+                           ---------------------------------------------------------------------------------
+
+--- Table 15 (Page: 7) ---
+        Name                                                        DUMMY                                                                   
+     Lab No.                                                 U4\n39854467           Age                                             30 Years
+      Ref By : : : : :                                                           Gender                                                 Male
+   Collected                                         4/5/2023  11:03:00AM      Reported      : : : :                    16/5/2023  1:36:25PM
+  A/c Status                                                           P1 Report Status                                                Final
+Collected at                          LPL-ROHINI (NATIONAL REFERENCE LAB)               Processed at              LPL-NATIONAL REFERENCE LAB
+                       National Reference laboratory, Block E, Sector 18,                            National Reference laboratory, Block E,
+                                                                   ROHINI                               Sector 18, Rohini, New Delhi -110085
+                                                             DELHI 110085                                                                   
+
+--- Table 16 (Page: 7) ---
+1.      TSH levels are subject to circadian variation, reaching peak levels between 2 - 4.a.m. and at a
+            minimum between 6-10 pm . The variation is of the order of 50% .  hence time of the day has
+                                                    influence on the measured serum TSH concentrations.
+2. Alteration in concentration of Thyroid hormone binding protein can profoundly affect Total T3 and/or
+                            Total T4 levels especially in pregnancy and in patients on steroid therapy.
+3.    Unbound fraction ( Free,T4 /Free,T3) of thyroid hormone is biologically active form and correlate
+                        more closely with clinical status of the patient than total T4/T3 concentration
+4.      Values <0.03 uIU/mL need to be clinically correlated due to presence of a rare TSH   variant in
+                                                                                       some individuals
+
+--- Table 17 (Page: 8) ---
+        Name                                                    DUMMY                                                                   
+     Lab No.                                             U4\n39854467           Age                                             30 Years
+      Ref By : : : : :                                                       Gender                                                 Male
+   Collected                                     4/5/2023  11:03:00AM      Reported      : : : :                    16/5/2023  1:36:25PM
+  A/c Status                                                          Report Status                                                Final
+Collected at                      LPL-ROHINI (NATIONAL REFERENCE LAB)               Processed at              LPL-NATIONAL REFERENCE LAB
+                       National Reference laboratory, Block E, Sector                            National Reference laboratory, Block E,
+                                                           18, ROHINI                               Sector 18, Rohini, New Delhi -110085
+                                                         DELHI 110085                                                                   
+
+--- Table 18 (Page: 8) ---
+VITAMIN B12; CYANOCOBALAMIN, SERUM                                                                      280.00\npg/mL\n211.00 - 911.00
+                            (CLIA)                                                                                                    
+                             Notes                                                                                                    
+                                1.            Interpretation of the result should be considered in relation to clinical circumstances.
+                                2.         It is recommended to consider supplementary testing with plasma Methylmalonic acid (MMA) or
+                                      plasma homocysteine levels to determine biochemical cobalamin deficiency in presence of clinical
+                                   suspicion of deficiency but indeterminate levels. Homocysteine levels are more sensitive but MMA is
+                                                                                                                         more specific
+                                3.     False increase in Vitamin B12 levels may be observed in patients with intrinsic factor blocking
+                                                                     antibodies, MMA measurement should be considered in such patients
+                                4.               The concentration of Vitamin B12 obtained with different assay methods cannot be used
+                                                           interchangeably due to differences in assay methods and reagent specificity
+
+--- Table 19 (Page: 9) ---
+        Name                                                    DUMMY                                                                   
+     Lab No.                                             U4\n39854467           Age                                             30 Years
+      Ref By : : : : :                                                       Gender                                                 Male
+   Collected                                     4/5/2023  11:03:00AM      Reported      : : : :                    16/5/2023  1:36:25PM
+  A/c Status                                                          Report Status                                                Final
+Collected at                      LPL-ROHINI (NATIONAL REFERENCE LAB)               Processed at              LPL-NATIONAL REFERENCE LAB
+                       National Reference laboratory, Block E, Sector                            National Reference laboratory, Block E,
+                                                           18, ROHINI                               Sector 18, Rohini, New Delhi -110085
+                                                         DELHI 110085                                                                   
+
+--- Table 20 (Page: 9) ---
+                                                                                                        · A new test Vitamin D, Ultrasensitive by LC-MS/MS is also available
+                                                                                                 Comments                                                                   
+Vitamin D promotes absorption of calcium and phosphorus and mineralization of bones and teeth. Deficiency                                                                   
+    in children causes Rickets and in adults leads to Osteomalacia.  It can also lead to Hypocalcemia and                                                                   
+ Tetany.  Vitamin D status is best determined  by measurement of 25 hydroxy vitamin D, as it is the major                                                                   
+           circulating form and has longer half life (2-3 weeks) than 1,25 Dihydroxy vitamin D (5-8 hrs).                                                                   
+                                                                                         Decreased Levels                                                                   
+                                                                                                        ·                                    Inadequate exposure to sunlight
+
+--- Table 21 (Page: 10) ---
+        Name                                                    DUMMY                                                                   
+     Lab No.                                             U4\n39854467           Age                                             30 Years
+      Ref By : : : : :                                                       Gender                                                 Male
+   Collected                                     4/5/2023  11:03:00AM      Reported      : : : :                    16/5/2023  1:36:25PM
+  A/c Status                                                          Report Status                                                Final
+Collected at                      LPL-ROHINI (NATIONAL REFERENCE LAB)               Processed at              LPL-NATIONAL REFERENCE LAB
+                       National Reference laboratory, Block E, Sector                            National Reference laboratory, Block E,
+                                                           18, ROHINI                               Sector 18, Rohini, New Delhi -110085
+                                                         DELHI 110085                                                                   
+
+--- Table 22 (Page: 10) ---
+                    Dr Ajay Gupta           Dr Gurleen Oberoi                                                          Dr Himangshu Mazumdar\nDr  Jatin Munjal
+                    MD, Pathology    DM(Hematopathology), MD,                                                                   MD, Biochemistry\nMD,Pathology
+Technical Director - Hematology &                   DNB,MNAMS Sr. Consultant Biochemist                                               \nConsultant Pathologist
+                       Immunology Consultant & Technical Lead                                                   NRL - Dr Lal PathLabs Ltd\nDr Lal PathLabs Ltd
+        NRL - Dr Lal PathLabs Ltd            -Hematopathology                                                                                                 
+                                    NRL - Dr Lal PathLabs Ltd                                                                                                 
+
+--- Table 23 (Page: 10) ---
+-------------------------------End of report --------------------------------
+                    AHEEEHAPMKHJBIFNLKIPAPNCBILLJCECCJLCIKPLNKEDFBFAPPAHEEEHA
+                    BNFFFNBPAPBLJHFGFGEKFOIPAOAHFHALBOJOBCJCJLEKMGJHNPBNFFFNB
+                    CIEGFGFNNNOJPBFOPFIAAJHFJCHEHEDBPKPHENFLMLKIOEFLBKHDEHANP
+                    DJMBGAFNBHOIEDIAPLOELFMFAFHLBLBFJIFEPBPAKCLJPDNLIFNBKEMEK
+                    KBMKLHFJONJFDIAMDMACKPJADENNOJCHKKMLAMMIPLKGKPNGKFFFOLMNG
+                    HGCBBEFNNICGDLHKIPAADIPBADHFOFAINDFCBKDLALIKOMNALNEIOGMKD
+                    DPIMIJFJALOBFHEIEKMBJEGHIHAFJBAKOHOPBLMIIJCHKJNLIJNFIDILD
+                    NJJJAMFNAINEBIHJGANHDMEILLBMFMBBKFCCAMNNIIKNOPNKBNFMBHILL
+                    NKLOFFFPCDCGFAAIONMIHIMKHGFFEKFBJFFLALPFOOBIOCNKDJPHNEKLJ
+                    PPNNOPFCEPFJJDCKJKAFGPNKADFKPNJHKEPFGBHLNKCKIGEOCNKKHMAMK
+                    LAIKOLFLGKCBMOCMPFNHEJEEINMFPAFBJMFEBFOFPNDMKPFKEPCIGCAEO
+                    MOICGJFCPLDGKEIMHHGNMMDEIEOPPFOEBEFPBLNOOLJBIKNJNKONHDICL
+                    MNNNNNEPKFDPBCCJOCFLHACHJBAHFHAHJKPFCMNLMKJCLFNMAHFHAHIKL
+                    APBBBPAPBBAAEJBCFMDKCBCFAGECHHCAONFFOLPGOLMHNLNNEDFHHBKHH
+                    HHHHHHHPHPPPHPPPPPPPPPHHPHPPPPPPPPPHHPPPPHHHPHPHHHHHPHPHP
+
+--- Table 24 (Page: 10) ---
+                                                                                                                                                                                            APBBBPAPBBAAEJBCFMDKCBCFAGECHHCAONFFOLPGOLMHNLNNEDFHHBKHH
+                                                                                                                                                                                            HHHHHHHPHPPPHPPPPPPPPPHHPHPPPPPPPPPHHPPPPHHHPHPHHHHHPHPHP
+                                                                                                                                                                                                                               IMPORTANT INSTRUCTIONS
+                                                         results \nreleased  pertain \nto \nthe \nspecimen \nŸTest \nsubmitted .ŸAll          test \nresults  are  dependent  on \nthe  quality  of \nthe \nsample \nreceived  by \nthe  Laboratory .
+                                                                 investigations  are  only  a \ntool \nto \nfacilitate \nŸLaboratory in  arriving  at  a  diagnosis  and  should  be  clinically  correlated  by \nthe  Referring  Physician .ŸReport
+                                                                   delivery  may  be  delayed  due \nto  unforeseen \ncircumstances. Inconvenience \nis \ntests  may \nrequire \nfurther \ntesting  at  additional \ncost \nfor \nregretted .ŸCertain
+                                                                 derivation \nof \nexact \nvalue.  Kindly \nsubmit \nrequest  within       72 hours \npost \nresults  may \nshow \ninterlaboratory \nreporting.ŸTest \nvariations .ŸThe  Courts/Forum
+                                            at  Delhi  shall  have  exclusive \njurisdiction \nin  all  disputes /claims  concerning              the \ntest(s)  &  or \nresults  of \nresults  are  not  valid \nfor  medico \nlegal \ntest(s).ŸTest
+                                                                    is \ncomputer \ngenerated  medical \ndiagnostic \npurposes.ŸThis      report \nthat \nhas \nbeen \nvalidated \nreport \ndoes \nby  Authorized  Medical  Practitioner /Doctor.ŸThe
+                                                                                                        not need physical signature.                                                                                                                 
+                                                                                               (#) Sample drawn from outside source.                                                                                                                 
+If Test results are alarming or unexpected, client is advised to contact the Customer Care immediately for possible remedial action.                                                                                                                 
+                                                   Tel: +91-11-49885050,Fax: - +91-11-2788-2134, E-mail: lalpathlabs@lalpathlabs.com                                                                                                                 
+  National Reference lab, Delhi, a CAP (7171001) Accredited, ISO 9001:2015 (FS60411) & ISO 27001:2013 (616691) Certified laboratory.                                                                                                                 
+

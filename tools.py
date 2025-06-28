@@ -1,7 +1,12 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 ## Importing libraries and files
 import os
-from dotenv import load_dotenv
-from langchain_community.document_loaders import PyPDFLoader
+import re
+import camelot
+import pandas as pd
+from langchain_community.document_loaders import PyMuPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 from langchain_community.embeddings import HuggingFaceEmbeddings
@@ -9,8 +14,7 @@ from crewai.tools import BaseTool
 from crewai_tools import SerperDevTool
 from pydantic import BaseModel, Field
 from typing import Type
-
-load_dotenv()
+from langchain_core.documents import Document
 
 from crewai_tools import tools
 
@@ -28,54 +32,78 @@ class BloodTestReportTool(BaseTool):
     args_schema: Type[BaseModel] = BloodTestReportToolSchema
 
     def _run(self, pdf_path: str, search_query: str) -> str:
-        # Sanitize the file path to remove any surrounding quotes or spaces
+        # Sanitize the file path
         sanitized_path = pdf_path.strip("'\" ")
         
-        # 1. Load document
-        loader = PyPDFLoader(file_path=sanitized_path)
-        docs = loader.load()
+        # 1. Extract tables using Camelot's stream method
+        try:
+            tables = camelot.read_pdf(sanitized_path, flavor='stream', pages='all')
+        except Exception as e:
+            return f"Error extracting tables with Camelot: {e}"
 
-        # 2. Split text with a larger chunk size
-        text_splitter = RecursiveCharacterTextSplitter(chunk_size=2048, chunk_overlap=200)
-        splits = text_splitter.split_documents(docs)
+        if not tables:
+            return "No tables found in the PDF."
 
-        # 3. Create vector store
-        embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
-        vectorstore = Chroma.from_documents(documents=splits, embedding=embeddings)
+        # 2. Process and consolidate all tables into a single string
+        all_tables_text = []
+        for i, table in enumerate(tables):
+            # Check each cell in the DataFrame for the "End of report" marker.
+            # This is more robust than checking the string representation.
+            end_of_report_found = False
+            for _, row in table.df.iterrows():
+                for cell in row:
+                    if "End of report" in str(cell):
+                        end_of_report_found = True
+                        break
+                if end_of_report_found:
+                    break
+            
+            # Skip the table if the marker was found
+            if end_of_report_found:
+                continue
 
-        # 4. Retrieve relevant chunks
-        retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
-        retrieved_docs = retriever.get_relevant_documents(search_query)
+            # Clean up the DataFrame for better text representation
+            df = table.df.copy()
+            # The first row might not always be the header, so we'll treat it as data
+            # and let the LLM infer the structure from the clean text.
+            df.dropna(axis=1, how='all', inplace=True) # Drop empty columns
+            df.dropna(axis=0, how='all', inplace=True) # Drop empty rows
+            df.reset_index(drop=True, inplace=True)
 
-        # 5. Format and return
-        return "\n\n".join([doc.page_content for doc in retrieved_docs])
+            # Prepend a header for the LLM to understand context
+            page_header = f"--- Table from Page {table.page} ---\n"
+            clean_table_text = df.to_string(index=False, header=True)
+            
+            all_tables_text.append(page_header + clean_table_text)
 
-## Creating Nutrition Analysis Tool
-class NutritionTool(BaseTool):
-    name: str = "Nutrition Analyzer"
-    description: str = "Analyzes blood report data to provide nutrition advice. (Currently a placeholder)"
-    
-    def _run(self, blood_report_data: str) -> str:
-        # Process and analyze the blood report data
-        processed_data = blood_report_data
+        # 3. Combine all cleaned table text into a single string for the LLM
+        full_text = "\n\n".join(all_tables_text).strip()
+
+        if not full_text:
+             return "Could not extract any valid table content from the PDF."
         
-        # Clean up the data format
-        i = 0
-        while i < len(processed_data):
-            if processed_data[i:i+2] == "  ":  # Remove double spaces
-                processed_data = processed_data[:i] + processed_data[i+1:]
-            else:
-                i += 1
-                
-        # TODO: Implement nutrition analysis logic here
-        return "Nutrition analysis functionality to be implemented"
+        
+        # 4. Split the text and create a searchable vector store
+        text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=150)
+        docs = text_splitter.create_documents([full_text])
 
-## Creating Exercise Planning Tool
-class ExerciseTool(BaseTool):
-    name: str = "Exercise Planner"
-    description: str = "Creates an exercise plan based on blood report data. (Currently a placeholder)"
+        # 5. Set up the vector store with embeddings
+        embeddings = HuggingFaceEmbeddings()
+        vectorstore = Chroma.from_documents(docs, embeddings)
+        
+        # 6. Search for the most relevant documents based on the query
+        retriever = vectorstore.as_retriever(search_kwargs={"k": 4})
+        relevant_docs = retriever.get_relevant_documents(search_query)
+        
+        # 7. Concatenate the content of the relevant documents, ensuring uniqueness
+        unique_contents = []
+        seen_contents = set()
+        for doc in relevant_docs:
+            if doc.page_content not in seen_contents:
+                unique_contents.append(doc.page_content)
+                seen_contents.add(doc.page_content)
+        
+        relevant_text = "\n\n".join(unique_contents)
 
-    def _run(self, blood_report_data: str) -> str:        
-        # TODO: Implement exercise planning logic here
-        return "Exercise planning functionality to be implemented"
+        return relevant_text
 
