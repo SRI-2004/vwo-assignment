@@ -6,7 +6,7 @@ This project is a powerful tool for analyzing blood test reports from PDF files.
 
 The following diagram illustrates the high-level architecture of the system, showing how the UI, task queue, background worker, and database interact.
 
-![Architecture Diagram](/vwo-assignment/outputs/Architecture.png)
+![Architecture Diagram](outputs/Architecture.png)
 
 
 
