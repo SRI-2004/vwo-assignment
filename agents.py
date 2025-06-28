@@ -1,88 +1,96 @@
 ## Importing libraries and files
 import os
 from dotenv import load_dotenv
-from langchain_groq import ChatGroq
+from crewai import Agent, llm
+from crewai.llm import LLM
+from tools import search_tool, BloodTestReportTool
 
 load_dotenv()
 
-
-from crewai import Agent
-
-from tools import search_tool, BloodTestReportTool
-
-### Loading LLM
-llm = ChatGroq(
-    api_key=os.environ.get("GROQ_API_KEY"),
-    model="llama3-8b-8192"
+# Set up the LLM
+llm = LLM(
+    model="gemini/gemma-3-12b-it",
+    api_key=os.environ.get("GOOGLE_API_KEY"),
+    temperature=0.2,
+    stream=True,
 )
 
-# Creating an Experienced Doctor agent
-doctor=Agent(
-    role="Senior General Physician",
-    goal="Provide a clear, understandable summary of a patient's blood test report. Identify any potential areas of concern and suggest next steps. User query: {query}",
-    verbose=True,
-    memory=True,
-    backstory=(
-        "You are a highly experienced and respected general physician with over 25 years of practice."
-        "You specialize in interpreting complex medical data and communicating it clearly to patients."
-        "Your approach is evidence-based, cautious, and always prioritizing patient well-being."
-        "You are known for your thoroughness and your ability to explain medical concepts in simple terms."
-    ),
+# Creating a senior medical professional agent
+doctor = Agent(
+    role="Senior Medical Professional",
+    goal="""To provide a comprehensive and accurate analysis of a blood test report by executing efficient, targeted searches 
+    and synthesizing the findings into clear, actionable advice.""",
+    backstory="""You are a highly experienced doctor, known for your diagnostic precision and efficiency. Your primary tool is the 
+    'Blood Test Report Searcher'. To answer a user's query without making excessive requests, you must:
+
+    1.  **Deconstruct the Query**: Identify all the essential biomarkers from the user's query.
+    2.  **Formulate a Batch Query**: Combine all keywords into a single, comprehensive search string for the tool. 
+        Separate keywords with " OR ", like this: `"Hemoglobin" OR "Cholesterol, Total" OR "TSH"`. This is crucial 
+        to minimize search operations.
+    3.  **Execute One-Shot Search**: Execute a single, powerful search using the combined query string.
+    4.  **Synthesize Findings**: Analyze the retrieved text chunks. For each biomarker, extract the value, units, and 
+        reference range. Synthesize all findings into a holistic analysis and provide clear, empathetic advice.
+    5.  **Be Exhaustive with the Data**: Your goal is to be thorough with the data you retrieve from your single search, 
+        not to be exhaustive with the number of searches.""",
     tools=[BloodTestReportTool(), search_tool],
     llm=llm,
-    max_iter=1,
-    max_rpm=1,
-    allow_delegation=True  # Allow delegation to other specialists
+    max_iter=3,
+    memory=True,
+    allow_delegation=False,
+    verbose=True,
 )
 
-# Creating a verifier agent
+# Creating a medical data verifier agent
 verifier = Agent(
     role="Medical Data Verifier",
-    goal="Verify that the uploaded document is a valid blood test report.",
-    verbose=True,
+    goal="To meticulously and efficiently verify if a given document is an authentic blood test report.",
+    backstory="""You are a Health Information Management specialist with a keen eye for detail and efficiency. Your sole responsibility 
+    is to validate a document's authenticity in a single, decisive step.
+
+    Your validation process is as follows:
+    1.  **Construct a Batch Query**: Create a single search string that includes all essential validation keywords, separated 
+        by " OR ". The query should be: `"Patient Name" OR "Lab Results" OR "Reference Range" OR "Hemoglobin"`.
+    2.  **Execute a Single Search**: Use the 'Blood Test Report Searcher' tool just **once** with this combined query.
+    3.  **Verify Evidence**: Review the search results. If you find evidence for at least **three** of the keywords, the document 
+        is considered valid.
+
+    Your final output must be a definitive statement of validity based on this single, efficient search.""",
+    tools=[BloodTestReportTool(), search_tool],
+    llm=llm,
+    max_iter=3,
     memory=True,
-    backstory=(
-        "You are a meticulous and detail-oriented medical records technician."
-        "Your primary responsibility is to ensure the accuracy and validity of all incoming medical documents."
-        "You have a keen eye for spotting inconsistencies and can quickly determine if a document is a genuine lab report."
-    ),
-    llm=llm,
-    tools=[BloodTestReportTool()],
-    max_iter=1,
-    max_rpm=1,
-    allow_delegation=True
-)
-
-
-nutritionist = Agent(
-    role="Certified Clinical Nutritionist",
-    goal="Provide personalized, evidence-based dietary recommendations based on the blood test results.",
+    allow_delegation=False,
     verbose=True,
-    backstory=(
-        "You are a certified clinical nutritionist with 15+ years of experience in creating dietary plans for patients."
-        "You base all of your recommendations on scientific evidence and the specific needs of the individual, as revealed by their lab work."
-        "You are skilled at helping patients understand the relationship between their diet and their health."
-    ),
-    llm=llm,
-    tools=[BloodTestReportTool()],
-    max_iter=1,
-    max_rpm=1,
-    allow_delegation=False
 )
 
+# Creating a nutritionist agent
+nutritionist = Agent(
+    role="Certified Nutritionist",
+    goal="Provide personalized dietary advice based on blood test results",
+    backstory="""You are a certified nutritionist with a holistic approach to health. You believe that 
+    food is medicine and specialize in creating tailored nutrition plans that address specific health 
+    concerns highlighted in medical reports. You are knowledgeable about the latest nutritional science 
+    and are skilled at creating plans that are both effective and easy to follow.""",
+    tools=[BloodTestReportTool(), search_tool],
+    llm=llm,
+    max_iter=3,
+    memory=True,
+    allow_delegation=False,
+    verbose=True,
+)
 
+# Creating a fitness expert agent
 exercise_specialist = Agent(
     role="Certified Exercise Physiologist",
-    goal="Develop a safe and effective exercise plan tailored to the user's health profile from their blood test results.",
-    verbose=True,
-    backstory=(
-        "You are a certified exercise physiologist with a deep understanding of how exercise impacts health and chronic disease."
-        "You specialize in creating personalized fitness plans that are safe, effective, and appropriate for an individual's specific health status and goals."
-        "You always prioritize safety and take a scientific approach to exercise prescription."
-    ),
+    goal="Develop safe and effective exercise plans based on blood test results",
+    backstory="""You are a certified exercise physiologist who specializes in creating fitness programs 
+    for individuals with specific health profiles. You understand the intricate connections between 
+    physiological markers and physical activity. Your goal is to design evidence-based exercise regimens 
+    that improve health outcomes, enhance fitness levels, and accommodate any medical limitations.""",
+    tools=[BloodTestReportTool(), search_tool],
     llm=llm,
-    tools=[BloodTestReportTool()],
-    max_iter=1,
-    max_rpm=1,
-    allow_delegation=False
+    max_iter=3,
+    memory=True,
+    allow_delegation=False,
+    verbose=True,
 )

@@ -15,6 +15,8 @@ def run_crew(query: str, file_path: str):
         agents=[verifier, doctor, nutritionist, exercise_specialist],
         tasks=[verification, help_patients, nutrition_analysis, exercise_planning],
         process=Process.sequential,
+        verbose=True,
+        max_iter=4,
     )
     
     result = medical_crew.kickoff({'query': query, 'file_path': file_path})
