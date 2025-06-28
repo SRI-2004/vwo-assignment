@@ -1,20 +1,56 @@
 import chainlit as cl
 import os
 import asyncio
-from crewai import Crew, Process
+import httpx
+import time
 
-from agents import doctor, verifier, nutritionist, exercise_specialist
-from task import verification, help_patients, nutrition_analysis, exercise_planning
+API_URL = "http://localhost:8000"
 
+async def upload_file(file: cl.File):
+    """Uploads the file to the FastAPI backend."""
+    files = [("file", (file.name, file.content, "application/pdf"))]
+    headers = {"accept": "application/json"}
+    data = {"query": cl.user_session.get("query")}
+    
+    async with httpx.AsyncClient(timeout=30) as client:
+        try:
+            response = await client.post(f"{API_URL}/analyze", files=files, data=data, headers=headers)
+            response.raise_for_status()
+            return response.json()
+        except httpx.HTTPStatusError as e:
+            await cl.Message(content=f"Error uploading file: {e.response.text}").send()
+            return None
+        except httpx.RequestError as e:
+            await cl.Message(content=f"Error connecting to backend: {e}").send()
+            return None
 
-# Define the crew outside of the session
-medical_crew = Crew(
-    agents=[verifier, doctor, nutritionist, exercise_specialist],
-    tasks=[verification, help_patients, nutrition_analysis, exercise_planning],
-    process=Process.sequential,
-    verbose=True,
-    max_iter=4,
-)
+async def poll_for_result(task_id: str):
+    """Polls the backend for the analysis result."""
+    headers = {"accept": "application/json"}
+    start_time = time.time()
+    timeout = 300  # 5 minutes
+
+    async with httpx.AsyncClient() as client:
+        while time.time() - start_time < timeout:
+            try:
+                response = await client.get(f"{API_URL}/results/{task_id}", headers=headers)
+                response.raise_for_status()
+                data = response.json()
+                
+                if data["status"] == "COMPLETED":
+                    return data["result"]
+                elif data["status"] == "FAILED":
+                    return f"Analysis failed: {data.get('error', 'Unknown error')}"
+                
+                # Wait before polling again
+                await asyncio.sleep(5)
+
+            except httpx.HTTPStatusError as e:
+                return f"Error polling for results: {e.response.text}"
+            except httpx.RequestError as e:
+                return f"Error connecting to backend: {e}"
+        
+        return "Analysis timed out. Please try again later."
 
 
 @cl.on_chat_start
@@ -23,6 +59,7 @@ async def start_chat():
     res = await cl.AskUserMessage(
         content="Welcome to the Blood Test Report Analyser! What would you like to know about your blood test report?"
     ).send()
+    cl.user_session.set("query", res["output"])
 
     # Ask for the PDF file
     files = None
@@ -33,48 +70,37 @@ async def start_chat():
             max_size_mb=20,
             timeout=180,
         ).send()
-
-    # Store the query and file in the session
-    cl.user_session.set("query", res["output"])
-    cl.user_session.set("pdf_file", files[0])
+    
+    file = files[0]
 
     # Let the user know the analysis is starting
-    await cl.Message(
-        content=f"Processing `{files[0].name}` for your query: '{res['output']}'. Please wait..."
-    ).send()
+    msg = cl.Message(content=f"Processing `{file.name}`... This may take a few minutes.")
+    await msg.send()
 
-    # Run the crew
-    await run_crew_in_background()
+    # 1. Upload file and start analysis
+    upload_response = await upload_file(file)
+    if not upload_response or "task_id" not in upload_response:
+        await cl.Message(content="Failed to start the analysis task.").send()
+        return
 
+    task_id = upload_response["task_id"]
+    
+    # Update the UI
+    msg.content = f"Your report `{file.name}` is being analyzed. Task ID: `{task_id}`. Please wait."
+    await msg.update()
 
-async def run_crew_in_background():
-    query = cl.user_session.get("query")
-    pdf_file = cl.user_session.get("pdf_file")
-    file_path = pdf_file.path
-    inputs = {"query": query, "file_path": file_path}
+    # 2. Poll for the result
+    final_result = await poll_for_result(task_id)
 
-    # We need to run the kickoff in a separate thread to not block the event loop.
-    # The verbose output from crewAI will be printed to the console.
-    await cl.make_async(medical_crew.kickoff)(inputs)
-
-    # Extract and display the output from each completed task
+    # 3. Display the final result
     await cl.Message(content="--- Final Report ---").send()
-
-    final_report_content = "# Blood Test Analysis Report\n\n"
-    for task in medical_crew.tasks:
-        if task.output is not None:
-            # The Final Answer is in task.output.raw
-            await cl.Message(author=task.agent.role, content=task.output.raw).send()
-            final_report_content += f"## {task.agent.role}\n\n"
-            final_report_content += f"{task.output.raw}\n\n"
+    await cl.Message(content=final_result).send()
 
     # Save the final report to a markdown file
     output_dir = "outputs"
     os.makedirs(output_dir, exist_ok=True)
-    report_path = os.path.join(output_dir, "final_report.md")
+    report_path = os.path.join(output_dir, f"final_report_{task_id}.md")
     with open(report_path, "w") as f:
-        f.write(final_report_content)
+        f.write(final_result)
 
-    await cl.Message(content=f"Final report saved to `{report_path}`.").send()
-
-    # Chainlit handles the temporary file, so no need to manually clean up. 
+    await cl.Message(content=f"Final report saved to `{report_path}`.").send() 

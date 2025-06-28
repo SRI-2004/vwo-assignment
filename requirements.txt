@@ -57,3 +57,8 @@ watchfiles
 # Added for table extraction
 camelot-py[cv]
 ghostscript
+# Added for async tasks and db
+celery
+redis
+SQLAlchemy
+httpx
