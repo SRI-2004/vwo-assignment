@@ -1,61 +1,107 @@
-# Project Setup and Execution Guide
+# Blood Test Report Analyser
 
-## Getting Started
+This project is a powerful tool for analyzing blood test reports from PDF files. It uses a team of AI agents to provide a comprehensive analysis, including a medical summary, nutrition advice, and an exercise plan.
 
-### Install Required Libraries
-```sh
-pip install -r requirements.txt
-```
+## Features
 
-## Running the Application
-This project now uses Chainlit for its user interface.
+-   **AI-Powered Analysis**: Utilizes a team of AI agents (Doctor, Verifier, Nutritionist, and Exercise Specialist) to provide a holistic health analysis.
+-   **Advanced PDF Extraction**: Tested multiple PDF extraction libraries and found `camelot` to be the most effective for table-based data extraction from blood reports.
+-   **Efficient RAG Pipeline**: Implemented document chunking and a `ChromaDB` vector store for efficient retrieval-augmented generation.
+-   **LLM Flexibility**: Tested with the free `Gemini` API, showcasing adaptability to different language models.
+-   **Chat Interface**: Offers an interactive chat-based interface built with [Chainlit](https://chainlit.io/) for a user-friendly experience.
+-   **Comprehensive Reports**: Generates detailed reports covering medical summaries, nutritional recommendations, and personalized exercise plans.
 
-1. **Set Environment Variables**: Make sure you have your `GOOGLE_API_KEY` set in a `.env` file in the project root.
 
-2. **Run the app**:
-   ```sh
-   chainlit run app.py -w
-   ```
-   The `-w` flag enables auto-reloading, so the app will restart when you make changes to the code.
 
-3. **Open in your browser**: Open your web browser and navigate to `http://localhost:8000`.
+## Debugging Challenge
 
-**Note**: The old FastAPI entry point, `main.py`, is no longer used and can be deleted.
+This project was initially presented as a debugging challenge. The codebase contained several bugs, ranging from simple dependency issues to more complex logical and architectural flaws. The challenge was to identify and fix these bugs to make the application fully functional.
 
-🐛 **Debug Mode Activated!** The project has bugs waiting to be squashed - your mission is to fix them and bring it to life.
+### Bugs Identified and Fixed
 
-## Debugging Instructions
+The following bugs were identified and fixed during the debugging process:
 
-1. **Identify the Bug**: Carefully read the code and understand the expected behavior.
-2. **Fix the Bug**: Implement the necessary changes to fix the bug.
-3. **Test the Fix**: Run the project and verify that the bug is resolved.
-4. **Repeat**: Continue this process until all bugs are fixed.
+-   **Configuration and Dependency Issues**:
+    -   Missing `uvicorn` dependency in `requirements.txt`.
+    -   Incorrect `Agent` and `SerperDevTool` imports in `agents.py`.
+    -   Undefined `PDFLoader` in `tools.py` due to a missing import.
 
-## Setup
+-   **Runtime Errors**:
+    -   `NameError` due to an uninitialized `llm` variable in `agents.py`.
+    -   `TypeError` because `read_data_tool` was not declared as a static method.
+    -   `ValidationError` from passing a function instead of a `BaseTool` instance to an agent.
+    -   `AttributeError` from incorrectly accessing uploaded file content in `app.py`.
 
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/your-username/vwo-assignment.git
-    cd vwo-assignment
-    ```
+-   **Logical and Functional Bugs**:
+    -   Hardcoded file path in `read_data_tool`, causing the application to ignore user-uploaded files.
+    -   All tasks were assigned to a single agent, leaving other specialist agents unused.
+    -   Only one task was added to the crew in `main.py`, resulting in an incomplete report.
+    -   Specialist agents were not provided with the necessary tools to perform their tasks.
+    -   `NutritionTool` and `ExerciseTool` had placeholder logic and were not implemented.
 
-2.  **Create a virtual environment and activate it:**
-    ```bash
-    python -m venv venv
-    source venv/bin/activate
-    ```
+-   **Harmful AI Behavior**:
+    -   The initial prompts and backstories for the agents were designed to generate satirical and harmful advice. These have been corrected to provide helpful and accurate information.
 
-3.  **Install the dependencies:**
-    ```bash
-    pip install -r requirements.txt
-    ```
+-   **UI and Tool Enhancements**:
+    -   A new interactive frontend was created using Chainlit, and the file handling was fixed to ensure a smooth user experience.
+    -   The `Serper` web search tool was properly initialized and integrated with the specialist agents.
+    -   The `NutritionTool` and `ExerciseTool` were implemented to leverage the web search tool, significantly improving the quality of health recommendations.
 
-4.  **Set up your API key:**
-    Create a `.env` file in the root of the project and add your Google API key:
-    ```
-    GOOGLE_API_KEY="your-google-api-key"
-    ```
+-   **API and Error Handling**:
+    -   The API endpoint had leaky error handling, exposing internal tracebacks to the user.
+
+-   **Architectural Enhancements**:
+    -   Synchronous functions defined with `async` were corrected.
+    -   The application was updated to handle long-running tasks asynchronously to prevent timeouts.
+
+## Sample Outputs
+
+The `outputs` directory contains sample outputs generated by the application, including:
+-   Screenshots of the Chainlit interface in action.
+-   A screencast demonstrating the application's workflow.
+
 
 ## How to Run
 
-1.  **Start the Chainlit application:**
+### Prerequisites
+
+-   Python 3.7+
+-   An environment with the required packages installed.
+
+### Installation
+
+1.  Clone the repository:
+    ```bash
+    git clone https://github.com/VWO-Inc/VWO-Assignment.git
+    cd VWO-Assignment
+    ```
+
+2.  Install the required packages:
+    ```bash
+    pip install -r vwo-assignment/requirements.txt
+    ```
+
+3.  Set up your environment variables. You'll need an API key for the language model used by the agents. Create a `.env` file in the `vwo-assignment` directory and add your key:
+    ```
+    OPENAI_API_KEY="your-api-key"
+    ```
+
+### Running the Chainlit Application
+
+To use the chat interface, run the following command from the `vwo-assignment` directory:
+
+```bash
+chainlit run app.py -w
+```
+
+This will start the Chainlit server, and you can access the application in your browser.
+
+### Running the FastAPI Server
+
+To use the REST API, run the following command from the `vwo-assignment` directory:
+
+```bash
+python main.py
+```
+
+The API will be available at `http://localhost:8000`. You can access the API documentation at `http://localhost:8000/docs`.
