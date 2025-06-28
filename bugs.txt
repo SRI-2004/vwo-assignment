@@ -1,23 +1,5 @@
 # Bugs found in the Blood Test Report Analyser project
 
-## Bug 1: Missing `uvicorn` in `requirements.txt`
-The `main.py` file uses `uvicorn` to run the FastAPI application, but it is not listed in the `requirements.txt` file. This will cause an `ImportError` when trying to run the project.
-
-## Bug 2: Hardcoded file path in `read_data_tool`
-The `read_data_tool` function in `tools.py` has a hardcoded default file path to `'data/sample.pdf'`. The application is designed to take a user-uploaded file, but this file is never passed to the tool. As a result, the application always processes the sample PDF instead of the user's file.
-
-## Bug 3: Undefined `PDFLoader`
-The `read_data_tool` function in `tools.py` uses `PDFLoader`, but it is not imported anywhere in the file. This will cause a `NameError` when the tool is called. It should be imported from a library like `langchain_community.document_loaders`.
-
-## Bug 4: Misleading `async` definitions
-Several methods in `tools.py` (`read_data_tool`, `analyze_nutrition_tool`, `create_exercise_plan_tool`) are defined with `async def` but do not use any `await` calls. They are synchronous functions and should be defined with `def` to avoid confusion and potential issues with the async event loop.
-
-## Bug 5: Undefined `llm` variable in `agents.py`
-The `agents.py` file uses a variable `llm` to initialize the CrewAI agents, but this variable is not defined. The line `llm = llm` is a circular definition and does not create a language model instance. This will cause a `NameError`.
-
-## Conceptual Bug: Satirical and Harmful AI Behavior
-The entire project seems to be a satire of AI-powered medical advice. The agents and tasks are explicitly designed to provide incorrect, nonsensical, and potentially harmful information. While this is likely intentional, it's a significant "bug" from the perspective of a user expecting a useful medical analysis tool.
-
 | #  | File / Component                             | Bug / Issue                                                                                                                          | Observable Symptom or Error                                                     | Severity        |
 | -- | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------- | --------------- |
 | 1  | **`agents.py`**                              | **LLM never initialized** (`llm = llm`) shadows itself; no model object created.                                                     | `NameError: name 'llm' is not defined` when initializing agents.                  | **High**        |
